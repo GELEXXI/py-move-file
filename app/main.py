@@ -9,7 +9,7 @@ def move_file(command: str) -> None:
         rename(command_path[1], command_path[2])
         return
 
-    source_file, destination_file = command_path[1], command_path[2]
+    _, source_file, destination_file = command_path
 
     if destination_file.endswith("/"):
         file_name = path.basename(source_file)
@@ -20,7 +20,7 @@ def move_file(command: str) -> None:
     if directory:
         makedirs(directory, exist_ok=True)
 
-    with (open(source_file, "r") as file_in,
-          open(destination_file, "w") as file_out):
+    with (open(source_file, "rb") as file_in,
+          open(destination_file, "wb") as file_out):
         file_out.write(file_in.read())
     remove(source_file)
